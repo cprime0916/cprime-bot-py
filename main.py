@@ -126,4 +126,4 @@ async def link(ctx, username):
       embed.add_field(name='Codeforces account linked', value=username)
       await ctx.send(embed=embed)
 
-bot.run('MTE2NjcwNDA3MjY5MTI5MDE3Mw.GLd7W_.7CmHiOdeCrUcApsN0Um09010g7A5ZuFx9bBYoQ')
+bot.run('MTE2NjcwNDA3MjY5MTI5MDE3Mw.GyCnFK.uWf0lgcFs4M6w9MMInT41NafhKKrMmR31FrJ4k')
