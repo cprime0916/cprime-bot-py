@@ -8,9 +8,11 @@ from contests_fn import getcn
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.', help_command=commands.DefaultHelpCommand(), intents=intents)
-
+totalPages = 0
 dbf = 'database.db'
 db = sqlite3.connect(dbf)
+hosts = ["codeforces.com", "atcoder.jp"]
+upcoming_contests = getcn(hosts)
 # Create a cursor to execute SQL statements
 cursor = db.cursor()
 cursor.execute("""
@@ -40,6 +42,8 @@ async def on_command_error(ctx, error):
         await ctx.send(embed=embed)
 
 
+
+
 def check_codeforces_username(username):
   api_url = f"https://codeforces.com/api/user.info?handles={username}"
   response = requests.get(api_url)
@@ -47,14 +51,14 @@ def check_codeforces_username(username):
   return response.status_code == 200 and data['status'] == 'OK' and data['result']
 
 @bot.command()
-async def contests(self, ctx):
+async def contests(ctx):
   print("run func")
   hosts = ["codeforces.com", "atcoder.jp"]
   upcoming_contests = getcn(hosts)
 
-  page_size = 3
+  page_size = 5
   total_pages = (len(upcoming_contests) + page_size - 1) // page_size
-
+  totalPages = total_pages
   emoji_list = ["⬅️", "➡️"] 
 
   current_page = 0
@@ -85,8 +89,8 @@ async def contests(self, ctx):
 
   while True:
       try:
-          reaction, user = await self.bot.wait_for(
-              "reaction_add", timeout=60.0, check=check
+          reaction, user = await bot.wait_for(
+              "reaction_add", check=check
           )
 
           if str(reaction.emoji) == emoji_list[0]:  # Previous page
@@ -103,7 +107,8 @@ async def contests(self, ctx):
 
           await message.remove_reaction(reaction, user)
 
-      except TimeoutError:
+      except TimeoutError as e:
+          print(f"{e}")
           break
 
 @bot.command()
@@ -126,5 +131,30 @@ async def link(ctx, username):
       embed = discord.Embed(title='Success', color=discord.Color.green())
       embed.add_field(name='Codeforces account linked', value=username)
       await ctx.send(embed=embed)
+
+emoji_list = ["⬅️", "➡️"] 
+def generate_embed(page, total_pages, upcoming_contests):
+    page_size = 10
+    start_index = page * page_size
+    end_index = min((page + 1) * page_size, len(upcoming_contests))
+
+    embed = discord.Embed(title=f"Upcoming Contests (Page {page + 1}/{total_pages})", color=discord.Color.blue())
+
+    for i in range(start_index, end_index):
+        contest = upcoming_contests[i]
+        embed.add_field(name=f"{contest['event']}", value=f"Start Time: {contest['start']}\n[Contest Link]({contest['href']})", inline=False)
+
+    return embed
+
+@bot.event
+async def on_ready():
+    print('Logged in as', bot.user.name)
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound) and ctx.message.content[1].isalpha() == True:
+        embed = discord.Embed(title='Invalid Command', color=discord.Color.red())
+        embed.add_field(name='Invalid cmd', value=f"The command `{ctx.message.content}` is not found in `main.py`")
+        await ctx.send(embed=embed)
 
 bot.run('MTE2NjcwNDA3MjY5MTI5MDE3Mw.GyCnFK.uWf0lgcFs4M6w9MMInT41NafhKKrMmR31FrJ4k')
