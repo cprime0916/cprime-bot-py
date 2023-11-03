@@ -8,6 +8,7 @@ config.read('config.ini')
 url = "https://clist.by/api/v3/contest/"
 
 def getcn(hosts):
+    print(hosts)
     contests = []
     for host in hosts:
         params = {
@@ -18,7 +19,7 @@ def getcn(hosts):
         }
 
         response = requests.get(url, params=params)
-        print(response.text)
+        print(response.status_code)
         data = response.json()
 
         if response.status_code == 200 :

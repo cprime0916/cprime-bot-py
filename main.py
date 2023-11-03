@@ -48,6 +48,7 @@ def check_codeforces_username(username):
 
 @bot.command()
 async def contests(self, ctx):
+  print("run func")
   hosts = ["codeforces.com", "atcoder.jp"]
   upcoming_contests = getcn(hosts)
 
