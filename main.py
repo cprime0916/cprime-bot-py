@@ -1,4 +1,5 @@
 import discord
+import datetime
 from discord.ext import commands
 from discord import Embed
 import requests
@@ -146,9 +147,25 @@ def generate_embed(page, total_pages, upcoming_contests):
 
     return embed
 
+@bot.command()
+async def set(ctx, time_units):
+    if time_units.isdigit():
+        time_units = int(time_units)
+        current_time = datetime.datetime.now()
+        target_time = current_time + datetime.timedelta(minutes=time_units)
+        await ctx.send(f"I will notify you {time_units} minutes before the contest. The target time is {target_time}.")
+    else:
+        await ctx.send(f"The time units provided ({time_units}) is not a valid number.")
+
+
 @bot.event
 async def on_ready():
     print('Logged in as', bot.user.name)
+    activity = discord.Activity(
+        name="cprime's braincells",
+        type=discord.ActivityType.playing
+    )
+    await bot.change_presence(activity=activity)
 
 @bot.event
 async def on_command_error(ctx, error):
