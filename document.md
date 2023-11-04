@@ -30,6 +30,8 @@ will send a red error embed message.</p>
 <p><tt>cid</tt> <br> This command unlinks all the previous linked accounts with no [cfUser] provided. <br> If [cfUser] is provided, the bot will check if [cfUser] is linked. <br> If it is, then
 the bot will send a green embed message. <br> Otherwise, it will send a red error embed message.</p>
 
-<hr>
 
+## Contests
+
+<hr>
 Work in progress...
