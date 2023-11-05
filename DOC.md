@@ -23,11 +23,11 @@ will send a red error embed message.</p>
 ### <tt>.unlink</tt>
 
 #### Format
-<p><tt>.unlink [cfUser]</tt></p>
-<p><tt>.unlink</tt></p>
+<p><tt>.unlink user [cfUser]</tt></p>
+<p><tt>.unlink all</tt></p>
 
 #### Description
-<p><tt>cid</tt> <br> This command unlinks all the previous linked accounts with no [cfUser] provided. <br> If [cfUser] is provided, the bot will check if [cfUser] is linked. <br> If it is, then
+<p><tt>cid</tt> <br> This command unlinks all the previous linked accounts with the <tt>all</tt> parameter provided. <br> If <tt>user</tt> and <tt>[cfUser]</tt> is provided instead, the bot will check if <tt>[cfUser]</tt> is linked. <br> If it is, then
 the bot will send a green embed message. <br> Otherwise, it will send a red error embed message.</p>
 
 
