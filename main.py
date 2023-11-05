@@ -34,6 +34,11 @@ def load_config(file_path):
 @bot.event
 async def on_ready():
     print('Logged in as', bot.user.name)
+    activity = discord.Activity(
+        name="Leftian Scriptures",
+        type=discord.ActivityType.listening
+    )
+    await bot.change_presence(activity=activity)
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -41,8 +46,6 @@ async def on_command_error(ctx, error):
         embed = discord.Embed(title='Invalid Command', color=discord.Color.red())
         embed.add_field(name='Invalid cmd', value=f"The command `{ctx.message.content}` is not found in `main.py`")
         await ctx.send(embed=embed)
-
-
 
 
 def check_codeforces_username(username):
@@ -133,6 +136,51 @@ async def link(ctx, username):
       embed.add_field(name='Codeforces account linked', value=username)
       await ctx.send(embed=embed)
 
+@bot.group() # commands to unlink all codeforces acc
+async def unlink(ctx):
+    if ctx.invoked_subcommand is None:
+        embed = discord.Embed(title='ERROR', color=discord.Color.red())
+        embed.add_field(name='Invalid command of `.unlink`', value='Use `.help unlink` for commands')
+        await ctx.send(embed=embed)
+
+@unlink.command()
+async def all(ctx):
+    discord_id = ctx.message.author.id
+    sql = "DELETE FROM accounts WHERE discord_id = ?"
+    val = (discord_id,)
+    cursor.execute(sql, val)
+    db.commit()
+    if cursor.rowcount > 0:
+        embed = discord.Embed(title='Success', color=discord.Color.green())
+        embed.add_field(name='All codeforces accounts unlinked', value=f"Discord ID: {discord_id}")
+        await ctx.send(embed=embed)
+    else:
+        embed = discord.Embed(title='ERROR', color=discord.Color.red())
+        embed.add_field(name='No account linked', value=f"Discord ID: {discord_id}")
+        await ctx.send(embed=embed)
+
+@unlink.command()
+async def user(ctx, cfUser):
+    print('I am summoned')
+    discord_id = ctx.message.author.id
+    cf = cfUser
+    sql = "DELETE FROM accounts WHERE discord_id = ? AND cf = ?"
+    print('?')
+    val = (discord_id, cf)
+    print('?2')
+    cursor.execute(sql, val)
+    print('?3')
+    db.commit()
+    # print('?')
+    if cursor.rowcount > 0:
+        embed = discord.Embed(title='Success', color=discord.Color.green())
+        embed.add_field(name=f'Unlinked {cfUser} from {ctx.message.author.name}', value=f"Discord ID: {discord_id}")
+        await ctx.send(embed=embed)
+    else:
+        embed = discord.Embed(title='ERROR', color=discord.Color.red())
+        embed.add_field(name=f'This account may not be linked to {ctx.message.author.name}', value=f"Discord ID: {discord_id}")
+        await ctx.send(embed=embed)
+
 emoji_list = ["⬅️", "➡️"] 
 def generate_embed(page, total_pages, upcoming_contests):
     page_size = 10
@@ -148,30 +196,7 @@ def generate_embed(page, total_pages, upcoming_contests):
     return embed
 
 @bot.command()
-async def set(ctx, time_units):
-    if time_units.isdigit():
-        time_units = int(time_units)
-        current_time = datetime.datetime.now()
-        target_time = current_time + datetime.timedelta(minutes=time_units)
-        await ctx.send(f"I will notify you {time_units} minutes before the contest. The target time is {target_time}.")
-    else:
-        await ctx.send(f"The time units provided ({time_units}) is not a valid number.")
-
-
-@bot.event
-async def on_ready():
-    print('Logged in as', bot.user.name)
-    activity = discord.Activity(
-        name="cprime's braincells",
-        type=discord.ActivityType.playing
-    )
-    await bot.change_presence(activity=activity)
-
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound) and ctx.message.content[1].isalpha() == True:
-        embed = discord.Embed(title='Invalid Command', color=discord.Color.red())
-        embed.add_field(name='Invalid cmd', value=f"The command `{ctx.message.content}` is not found in `main.py`")
-        await ctx.send(embed=embed)
+async def set(ctx, time):
+    pass
 
 bot.run('MTE2NjcwNDA3MjY5MTI5MDE3Mw.GyCnFK.uWf0lgcFs4M6w9MMInT41NafhKKrMmR31FrJ4k')
