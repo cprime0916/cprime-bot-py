@@ -8,7 +8,7 @@ over time <br>
 
 ### <tt>.link</tt>
 
-#### Format
+#### Syntax
 <p><tt>.link [cfUser]</tt> <br> </p>
 
 #### Description
@@ -22,7 +22,7 @@ will send a red error embed message.</p>
 
 ### <tt>.unlink</tt>
 
-#### Format
+#### Syntax
 <p><tt>.unlink user [cfUser]</tt></p>
 <p><tt>.unlink all</tt></p>
 
