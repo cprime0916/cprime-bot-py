@@ -8,7 +8,7 @@ over time <br>
 
 ### <tt>.link</tt>
 
-#### Format
+#### Syntax
 <p><tt>.link [cfUser]</tt> <br> </p>
 
 #### Description
@@ -22,7 +22,7 @@ will send a red error embed message.</p>
 
 ### <tt>.unlink</tt>
 
-#### Format
+#### Syntax
 <p><tt>.unlink user [cfUser]</tt></p>
 <p><tt>.unlink all</tt></p>
 
@@ -33,5 +33,9 @@ the bot will send a green embed message. <br> Otherwise, it will send a red erro
 
 ## Contests
 
+### <tt>.contests</tt>
+
+#### Description
+<p><tt>v1.0</tt> <br> This command makes the bot send all the contests in codeforces and atcoder. </p>
 <hr>
 Work in progress...
