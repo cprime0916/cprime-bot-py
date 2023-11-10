@@ -35,8 +35,8 @@ def load_config(file_path):
 async def on_ready():
     print('Logged in as', bot.user.name)
     activity = discord.Activity(
-        name="Leftian Scriptures",
-        type=discord.ActivityType.listening
+        name="cprime",
+        type=discord.ActivityType.watching
     )
     await bot.change_presence(activity=activity)
 
@@ -198,5 +198,10 @@ def generate_embed(page, total_pages, upcoming_contests):
 @bot.command()
 async def set(ctx, time):
     pass
+
+# @bot.command()
+# async def temp(ctx):
+#     id = 1171453621175595119
+#     await ctx.send(f"<:finish_task:{id}>")
 
 bot.run('MTE2NjcwNDA3MjY5MTI5MDE3Mw.GyCnFK.uWf0lgcFs4M6w9MMInT41NafhKKrMmR31FrJ4k')
