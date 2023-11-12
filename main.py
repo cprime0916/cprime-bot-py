@@ -21,8 +21,8 @@ def load_config(file_path):
 async def on_ready():
     print('Logged in as', bot.user.name)
     activity = discord.Activity(
-        name="cprime",
-        type=discord.ActivityType.watching
+        name="左經",
+        type=discord.ActivityType.listening
     )
     await bot.change_presence(activity=activity)
 

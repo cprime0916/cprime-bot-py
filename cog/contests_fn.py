@@ -51,7 +51,7 @@ class contest_fn(commands.Cog):
     @commands.command()
     async def contests(self, ctx):
         print("run func")
-        hosts = ["codeforces.com", "atcoder.jp"]
+        hosts = ["codeforces.com", "atcoder.jp", "codechef.com"]
         upcoming_contests = getcn(hosts)
 
         page_size = 5
