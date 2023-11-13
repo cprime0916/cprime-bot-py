@@ -36,6 +36,6 @@ the bot will send a green embed message. <br> Otherwise, it will send a red erro
 ### <tt>.contests</tt>
 
 #### Description
-<p><tt>v1.0</tt> <br> This command makes the bot send all the contests in codeforces and atcoder. </p>
+<p><tt>v1.0</tt> <br> This command makes the bot send all the contests in codeforces, atcoder, and codechef. </p>
 <hr>
 Work in progress...
