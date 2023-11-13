@@ -27,7 +27,7 @@ will send a red error embed message.</p>
 <p><tt>.unlink all</tt></p>
 
 #### Description
-<p><tt>cid</tt> <br> This command unlinks all the previous linked accounts with the <tt>all</tt> parameter provided. <br> If <tt>user</tt> and <tt>[cfUser]</tt> is provided instead, the bot will check if <tt>[cfUser]</tt> is linked. <br> If it is, then
+<p><tt>v1.0</tt> <br> This command unlinks all the previous linked accounts with the <tt>all</tt> parameter provided.</p> <p><tt>dbg</tt> <br> If <tt>user</tt> and <tt>[cfUser]</tt> is provided instead, the bot will check if <tt>[cfUser]</tt> is linked. <br> If it is, then
 the bot will send a green embed message. <br> Otherwise, it will send a red error embed message.</p>
 
 
