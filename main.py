@@ -34,6 +34,11 @@ async def on_command_error(ctx, error):
         await ctx.send(embed=embed)
 
 @bot.event
+async def on_member_join(member):
+    channel = bot.get_channel(1153623930892976128)
+    await channel.send(f"{member.mention}, Welcome to the server of **SMS Programming Team**.")
+    
+@bot.event
 async def setup_hook():
     for filename in os.listdir("./cog"):
         if filename.endswith(".py"):

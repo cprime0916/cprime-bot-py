@@ -80,7 +80,7 @@ class link_fn(commands.Cog):
         cf = cfUser
         sql = "DELETE FROM accounts WHERE discord_id = ? AND cf = ?"
         print('?')
-        val = (discord_id, cf)
+        val = (discord_id, cf,)
         print('?2')
         cursor.execute(sql, val)
         print('?3')
