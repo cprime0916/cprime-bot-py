@@ -9,6 +9,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 bot = commands.Bot(command_prefix='.', help_command=commands.DefaultHelpCommand(), intents=intents)
 totalPages = 0
 
