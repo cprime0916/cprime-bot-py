@@ -35,7 +35,7 @@ class link_fn(commands.Cog):
         is_username_valid = self.check_codeforces_username(username)
         if not is_username_valid:
             embed = discord.Embed(title="ERROR", color=discord.Color.red()) # ERR EMBED
-            embed.add_field(name="Invalid Codeforces username", value=username)
+            embed.add_field(name="Invalid Codeforces username <:wa:1172511313168175235>", value=username)
             await ctx.send(embed=embed)
         else:
             # Insert the link into the database
@@ -55,7 +55,7 @@ class link_fn(commands.Cog):
     async def unlink(self, ctx):
         if ctx.invoked_subcommand is None:
             embed = discord.Embed(title="ERROR", color=discord.Color.red())
-            embed.add_field(name="Invalid command of `.unlink`", value="Use `.help unlink` for commands")
+            embed.add_field(name="Invalid command of `.unlink` <:wa:1172511313168175235>", value="Use `.help unlink` for commands")
             await ctx.send(embed=embed)
 
     @unlink.command()
@@ -71,7 +71,7 @@ class link_fn(commands.Cog):
             await ctx.send(embed=embed)
         else:
             embed = discord.Embed(title="ERROR", color=discord.Color.red())
-            embed.add_field(name="No account linked", value=f"Discord ID: {discord_id}")
+            embed.add_field(name="No account linked <:wa:1172511313168175235>", value=f"Discord ID: {discord_id}")
             await ctx.send(embed=embed)
 
     @unlink.command()
@@ -103,6 +103,7 @@ class link_fn(commands.Cog):
         val = (discord_id,)
         print("?2")
         cursor.execute(sql, val)
+        db.commit()
         results = cursor.fetchall()
         print("?3")
         if results:
@@ -116,7 +117,6 @@ class link_fn(commands.Cog):
             print("?4.2")
             embed = discord.Embed(title="ERROR", name="No linked accounts", value=f"{discord_id}")
             await ctx.send(embed=embed)
-        db.commit()
 
     @commands.command()
     async def ac(self, ctx):
@@ -127,6 +127,7 @@ class link_fn(commands.Cog):
         sql = "SELECT username FROM accounts WHERE discord_id = ?"
         val = (discordID,)
         cursor.execute(sql, val)
+        db.commit()
         results = cursor.fetchall()
         usernames = [result[0] for result in results]
         usernames = set(usernames)
@@ -142,8 +143,19 @@ class link_fn(commands.Cog):
             embed = discord.Embed(title="ERROR", name="Can't find AC count", value=f"{discordID}", color=discord.Color.red())
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title=f"AC count of {discordName}", description="\n".join([' '.join(t) for t in usernameList]), color=discord.Color.blue())
+            embed = discord.Embed(title=f"AC count of {discordName} <:finish_task:1171453621175595119>", description="\n".join([' '.join(t) for t in usernameList]), color=discord.Color.blue())
             await ctx.send(embed=embed)
+    
+    # @commands.command()
+    # async def rank(self, ctx):
+    #     userList = []
+    #     sql = "SELECT username FROM accounts"
+    #     cursor.execute(sql,)
+    #     db.commit()
+    #     results = cursor.fetchall()
+    #     users = [result[0] for result in results]
+    #     users = set(users)
+
             
                 
 
