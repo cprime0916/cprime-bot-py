@@ -2,10 +2,12 @@ import discord
 import json
 from discord.ext import commands
 from discord import Embed
+from lxml import html
 import requests
 import sqlite3
 import configparser
 API_URL = "https://codeforces.com/api/user.status"
+PROFILE_URL = "https://codeforces.com/profile"
 config = configparser.ConfigParser()
 config.read("config.ini")
 dbf = "database.db"
@@ -29,7 +31,7 @@ class link_fn(commands.Cog):
         response = requests.get(api_url)
         data = response.json()
         return response.status_code == 200 and data["status"] == "OK" and data["result"]
-    
+
     @commands.command()
     async def link(self,ctx, username):
         is_username_valid = self.check_codeforces_username(username)
@@ -120,6 +122,7 @@ class link_fn(commands.Cog):
 
     @commands.command()
     async def ac(self, ctx):
+        # print("ac run")
         discordID = ctx.message.author.id
         discordName = ctx.message.author.name
         err = 0
@@ -130,31 +133,50 @@ class link_fn(commands.Cog):
         db.commit()
         results = cursor.fetchall()
         usernames = [result[0] for result in results]
+        # print(usernames)
         usernames = set(usernames)
         for username in usernames:
-            response = requests.get(f"{API_URL}?handle={username}")
-            data = response.json()
-            if data["status"] == "OK":
-                cnt = sum(1 for submission in data["result"] if submission["verdict"] == "OK")
-                usernameList.append((username, str(cnt)))
+            response = requests.get(f"{PROFILE_URL}/{username}")
+            # print(response.status_code)
+            # print("diu lei lou mou")
+            if response.status_code == 200:
+                content = response.content
+                # print("?1")
+                tree = html.fromstring(content)
+                # print("?2")
+                element = tree.xpath('//*[@id="pageContent"]/div[4]/div/div[3]/div[1]/div[1]/div[1]')
+                if element:
+                    # print("?3")
+                    ac = element[0].text_content()
+                    ac = ac.replace(" problems", "")
+                    usernameList.append((username, ac))
+                else:
+                    # print("?3.2")
+                    err = 2
             else:
-                err+=1
-        if err > 0:
-            embed = discord.Embed(title="ERROR", name="Can't find AC count", value=f"{discordID}", color=discord.Color.red())
+                err = 1
+        if err == 1:
+            embed = discord.Embed(title="ERROR", name="Abnormal response signal", value=f"{discordID}", color=discord.Color.red())
+            await ctx.send(embed=embed)
+        elif err == 2:
+            embed = discord.Embed(title="ERROR", name="Element not found at XPath", value=f"{discordID}", color=discord.Color.red())
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title=f"AC count of {discordName} <:finish_task:1171453621175595119>", description="\n".join([' '.join(t) for t in usernameList]), color=discord.Color.blue())
+            # print("?69")
+            embed = discord.Embed(title=f"{ctx.author.name}'s AC count", description="\n".join([' '.join(t) for t in usernameList]), color=discord.Color.blue())
             await ctx.send(embed=embed)
     
     # @commands.command()
     # async def rank(self, ctx):
     #     userList = []
     #     sql = "SELECT username FROM accounts"
-    #     cursor.execute(sql,)
+    #     cursor.execute(sql)
+    #     cfRets = cursor.fetchall()
     #     db.commit()
-    #     results = cursor.fetchall()
-    #     users = [result[0] for result in results]
-    #     users = set(users)
+    #     globunames = [result[0] for result in cfRets]
+    #     globunames = set(globunames)
+    #     for usernames in globunames:
+
 
             
                 
