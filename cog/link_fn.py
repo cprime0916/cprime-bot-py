@@ -173,15 +173,12 @@ class link_fn(commands.Cog):
     #     cursor.execute(sql)
     #     cfRets = cursor.fetchall()
     #     db.commit()
-    #     globunames = [result[0] for result in cfRets]
-    #     globunames = set(globunames)
-    #     for usernames in globunames:
-
-
-            
+    #     glnames = [result[0] for result in cfRets]
+    #     glnames = set(glnames)
+    #     for usernames in glnames:
+    #         usernames = set(usernames)
+    #         for username in usernames:
                 
-
-
 
 async def setup(bot):
     await bot.add_cog(link_fn(bot))

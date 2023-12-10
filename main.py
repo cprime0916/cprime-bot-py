@@ -29,9 +29,11 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound) and ctx.message.content[1].isalpha() == True:
+    msg = ctx.message.content
+    msg = msg.replace(".", "")
+    if isinstance(error, commands.CommandNotFound) and msg[0].isalpha() == True:
         embed = discord.Embed(title='Invalid Command', color=discord.Color.red())
-        embed.add_field(name='Invalid cmd', value=f"The command `{ctx.message.content}` is not found in `main.py`")
+        embed.add_field(name='Invalid cmd', value=f"The command `{msg}` is not found in `main.py`")
         await ctx.send(embed=embed)
 
 @bot.event
@@ -45,9 +47,13 @@ async def setup_hook():
         if filename.endswith(".py"):
             await bot.load_extension(f"cog.{filename[:-3]}")
 
-bot.run(config.get("discord", "token"))
+@bot.command()
+async def say(ctx, *, s):
+    await ctx.message.delete()
+    await ctx.send(f"{s}")
 
-# @bot.command()
-# async def temp(ctx):
-#     id = 1171453621175595119
-#     await ctx.send(f"<:finish_task:{id}>")
+@bot.command()
+async def prayer(ctx):
+    await ctx.send('''oh @Left is so genius it is undoubtable that @Left is always the truth, the myth, the legendary holy @Left. It is our luck that we are blessed by @Left and receiving his guidance''')
+
+bot.run(config.get("discord", "token"))

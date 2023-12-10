@@ -65,7 +65,7 @@ class contest_fn(commands.Cog):
             start_index = page * page_size
             end_index = min((page + 1) * page_size, len(upcoming_contests))
 
-            embed = discord.Embed(title=f"Upcoming Contests (Page {page + 1}/{total_pages})", color=discord.Color.blue())
+            embed = discord.Embed(title=f"Upcoming Contests (Page {page + 1}/{total_pages})", color=discord.Color.blue(), description="Believe in Left")
 
             for i in range(start_index, end_index):
                 contest = upcoming_contests[i]
