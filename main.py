@@ -4,6 +4,7 @@ import asyncio
 import discord
 from discord.ext import commands
 import configparser
+import random
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -27,6 +28,15 @@ async def on_ready():
     )
     await bot.change_presence(activity=activity)
 
+@bot.command()
+@commands.is_owner()
+async def reload_cog(ctx, cog_name):
+    try:
+        await bot.reload_extension(cog_name)
+        await ctx.send(f"The cog `{cog_name}` has been reloaded.")
+    except commands.ExtensionError as e:
+        await ctx.send(f"An error occurred while reloading the cog: {e}")
+
 @bot.event
 async def on_command_error(ctx, error):
     msg = ctx.message.content
@@ -40,6 +50,22 @@ async def on_command_error(ctx, error):
 async def on_member_join(member):
     channel = bot.get_channel(1153623930892976128)
     await channel.send(f"{member.mention}, Welcome to the server of **SMS Programming Team**.")
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    if isinstance(message.channel, discord.DMChannel):
+        det = random.randint(1, 4)
+        if det == 1:
+            await message.channel.send("屌你老母")
+        elif det == 2:
+            await message.channel.send("做乜撚嘢DM我啊on9仔")
+        elif det == 3:
+            await message.channel.send("係唔係咁撚得閒")
+        elif det == 4:
+            await message.channel.send("dllmch")
+    await bot.process_commands(message)
     
 @bot.event
 async def setup_hook():
@@ -47,13 +73,5 @@ async def setup_hook():
         if filename.endswith(".py"):
             await bot.load_extension(f"cog.{filename[:-3]}")
 
-@bot.command()
-async def say(ctx, *, s):
-    await ctx.message.delete()
-    await ctx.send(f"{s}")
-
-@bot.command()
-async def prayer(ctx):
-    await ctx.send('''oh @Left is so genius it is undoubtable that @Left is always the truth, the myth, the legendary holy @Left. It is our luck that we are blessed by @Left and receiving his guidance''')
 
 bot.run(config.get("discord", "token"))
