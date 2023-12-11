@@ -2,3 +2,4 @@ config.ini
 __pycache__
 database.db
 test.py
+log.txt
