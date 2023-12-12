@@ -1,6 +1,7 @@
 import os
 import json
 import asyncio
+import datetime
 import discord
 from discord.ext import commands
 import configparser
@@ -56,6 +57,13 @@ async def on_message(message):
     if message.author == bot.user:
         return
     if isinstance(message.channel, discord.DMChannel):
+        time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        username = message.author.name
+        user_id = message.author.id
+        s = message.content
+        id = message.id
+        with open("log.txt", 'a') as f:
+            f.write(f"{time} {username} <{user_id}> sent DM {id} (Content: {s})\n")
         det = random.randint(1, 4)
         if det == 1:
             await message.channel.send("屌你老母")
@@ -65,8 +73,18 @@ async def on_message(message):
             await message.channel.send("係唔係咁撚得閒")
         elif det == 4:
             await message.channel.send("dllmch")
-    await bot.process_commands(message)
     
+    await bot.process_commands(message)
+
+@bot.event
+async def on_command(ctx):
+    username = ctx.author.name
+    user_id = ctx.author.id
+    cmd = ctx.command
+    time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open("log.txt", 'a') as f:
+        f.write(f"{time} {username} <{user_id}> used command {cmd}.\n")
+
 @bot.event
 async def setup_hook():
     for filename in os.listdir("./cog"):
