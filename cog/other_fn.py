@@ -80,5 +80,10 @@ Accepted.''')
         except discord.NotFound:
             await ctx.send("Message not found.")
 
+    @commands.command()
+    async def spam(self, ctx, text, num):
+        for i in range(0, num):
+            await ctx.send(text)
+
 async def setup(bot):
     await bot.add_cog(other_fn(bot))
