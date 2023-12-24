@@ -22,7 +22,7 @@ cursor.execute("""
     )
 """)
 db.commit()
-class link_fn(commands.Cog):
+class LinkCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -181,4 +181,4 @@ class link_fn(commands.Cog):
                 
 
 async def setup(bot):
-    await bot.add_cog(link_fn(bot))
+    await bot.add_cog(LinkCmd(bot))

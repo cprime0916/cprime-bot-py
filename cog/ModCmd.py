@@ -10,7 +10,7 @@ dbf = 'database.db'
 db = sqlite3.connect(dbf)
 cursor = db.cursor()
 db.commit()
-class mod_fn(commands.Cog):
+class ModCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     def check_codeforces_username(self, username):
@@ -62,4 +62,4 @@ class mod_fn(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(mod_fn(bot))
+    await bot.add_cog(ModCmd(bot))

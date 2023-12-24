@@ -5,7 +5,7 @@ import random
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-class other_fn(commands.Cog):
+class OtherCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
@@ -82,8 +82,33 @@ Accepted.''')
 
     @commands.command()
     async def spam(self, ctx, text, num):
-        for i in range(0, num):
-            await ctx.send(text)
+        if int(num) <= 10 and text[0] != '`':
+            for _ in range(0, int(num)):
+                await ctx.send(text)
+        elif int(num) <= 10:
+            if text == "`prayer`":
+                for _ in range(0, int(num)):
+                    await ctx.send('''oh Left is so genius it is undoubtable that Left is always the truth, the myth, the legendary holy Left. It is our luck that we are blessed by Left and receiving his guidance''')
+            elif text == "`left_prayer`":
+                for _ in range(0, int(num)):
+                    await ctx.send('''Our LeftLeft in Atcoder, 
+Hallowed be thy handle,
+Thy contests come,
+Thy AK be done,
+On HKOI as in IOI,
+Give us our daily AC.
+And forgive our WA spams,
+As we forgive those who hacked against us.
+Do not bring us to the Methforces trials
+But deliever us from stupidity.
+For the IOI Gold, the IQ,
+And the AK are thine,
+Now and Forever. 
+Accepted.''')
+            else:
+                await ctx.send("invalid command prompt.")
+        else:
+            await ctx.send("In `main.py`, MAX_LIMIT = 10")
 
 async def setup(bot):
-    await bot.add_cog(other_fn(bot))
+    await bot.add_cog(OtherCmd(bot))

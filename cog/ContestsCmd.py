@@ -44,7 +44,7 @@ def getcn(hosts):
     sorted_contests = sorted(contests, key=lambda x: x["start"])
     return sorted_contests
 
-class contest_fn(commands.Cog):
+class ContestCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
@@ -110,4 +110,4 @@ class contest_fn(commands.Cog):
                 break
 
 async def setup(bot):
-    await bot.add_cog(contest_fn(bot))
+    await bot.add_cog(ContestCmd(bot))
