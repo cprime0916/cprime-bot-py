@@ -108,7 +108,7 @@ Accepted.''')
             else:
                 await ctx.send("invalid command prompt.")
         else:
-            await ctx.send("In `main.py`, MAX_LIMIT = 10")
+            await ctx.send("In `main.py` line 111, `MAX_LIMIT = 10`")
 
 async def setup(bot):
     await bot.add_cog(OtherCmd(bot))

@@ -12,7 +12,8 @@ config.read('config.ini')
 intents = discord.Intents.all()
 intents.message_content = True
 intents.members = True
-bot = commands.Bot(command_prefix='.', intents=intents)
+activity = discord.Activity(type=discord.ActivityType.listening, name="String Quartet No. 8 in C minor")
+bot = commands.Bot(command_prefix='.', activity=activity, intents=intents)
 totalPages = 0
 
 bot.remove_command("help")
@@ -25,11 +26,6 @@ def load_config(file_path):
 @bot.event
 async def on_ready():
     print('Logged in as', bot.user.name)
-    activity = discord.Activity(
-        name="左經",
-        type=discord.ActivityType.custom
-    )
-    await bot.change_presence(activity=activity)
 
 @bot.command()
 @commands.is_owner()
