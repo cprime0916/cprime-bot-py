@@ -91,7 +91,7 @@ async def contests(cls, interaction: discord.Interaction):
                     current_page -= 1
                     if current_page < 0:
                         current_page = total_pages - 1
-                    await message.edit(embed=generate_embed(current_page))
+                    await message.edit_original_response(embed=generate_embed(current_page))
 
                 elif str(reaction.emoji) == emoji_list[1]:  # Next page
                     current_page += 1
