@@ -3,6 +3,7 @@ import configparser
 import requests
 import discord
 from discord.ext import commands
+from discord import app_commands
 config = configparser.ConfigParser()
 config.read('config.ini')
 
@@ -44,12 +45,7 @@ def getcn(hosts):
     sorted_contests = sorted(contests, key=lambda x: x["start"])
     return sorted_contests
 
-class ContestCmd(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-    
-    @commands.command()
-    async def contests(self, ctx):
+async def contests(cls, interaction: discord.Interaction):
         print("run func")
         hosts = ["codeforces.com", "atcoder.jp", "codechef.com", "leetcode.com"]
         upcoming_contests = getcn(hosts)
@@ -73,21 +69,21 @@ class ContestCmd(commands.Cog):
 
             return embed
 
-        message = await ctx.send(embed=generate_embed(current_page))
+        message = await interaction.response.send_message(embed=generate_embed(current_page))
 
         for emoji in emoji_list:
             await message.add_reaction(emoji)
 
         def check(reaction, user):
             return (
-                user == ctx.message.author
+                user == interaction.message.author
                 and reaction.message.id == message.id
                 and str(reaction.emoji) in emoji_list
             )
 
         while True:
             try:
-                reaction, user = await self.bot.wait_for(
+                reaction, user = await cls.bot.wait_for(
                     "reaction_add", check=check
                 )
 
@@ -101,15 +97,10 @@ class ContestCmd(commands.Cog):
                     current_page += 1
                     if current_page == total_pages:
                         current_page = 0
-                    await message.edit(embed=generate_embed(current_page))
+                    await message.edit_original_response(embed=generate_embed(current_page))
 
                 await message.remove_reaction(reaction, user)
 
             except TimeoutError as e:
                 print(f"{e}")
                 break
-
-    
-
-async def setup(bot):
-    await bot.add_cog(ContestCmd(bot))

@@ -82,6 +82,7 @@ Accepted.''')
 
     @commands.command()
     async def spam(self, ctx, text, num):
+        await ctx.message.delete()
         if int(num) <= 10 and text[0] != '`':
             for _ in range(0, int(num)):
                 await ctx.send(text)

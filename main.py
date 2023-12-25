@@ -23,18 +23,10 @@ def load_config(file_path):
       config = json.load(file)
     return config
 
+# bot events
 @bot.event
 async def on_ready():
     print('Logged in as', bot.user.name)
-
-@bot.command()
-@commands.is_owner()
-async def reload_cog(ctx, cog_name):
-    try:
-        await bot.reload_extension(cog_name)
-        await ctx.send(f"The cog `{cog_name}` has been reloaded.")
-    except commands.ExtensionError as e:
-        await ctx.send(f"An error occurred while reloading the cog: {e}")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -88,6 +80,36 @@ async def setup_hook():
     for filename in os.listdir("./cog"):
         if filename.endswith(".py"):
             await bot.load_extension(f"cog.{filename[:-3]}")
+
+# bot commands (without class)
+@bot.command()
+@commands.is_owner()
+async def load_cog(ctx, cog):
+    try:
+        await bot.load_extension(f"cog.{cog}")
+        embed = discord.Embed(title="Successful", description="LOAD_COG operation successful.", color=discord.Color.green())
+        await ctx.send(embed=embed)
+    except commands.ExtensionError as e:
+        await ctx.send(f"Error: {e}")
+
+@bot.command()
+@commands.is_owner()
+async def unload_cog(ctx, cog):
+    try:
+        await bot.unload_extension(f"cog.{cog}")
+        embed = discord.Embed(title="Successful", description="UNLOAD_COG operation successful.", color=discord.Color.green())
+        await ctx.send(embed=embed)
+    except commands.ExtensionError as e:
+        await ctx.send(f"Error: {e}")
+
+@bot.command()
+@commands.is_owner()
+async def reload_cog(ctx, cog):
+    try:
+        await bot.reload_extension(f"cog.{cog}")
+        await ctx.send(f"The cog `{cog}` has been reloaded.")
+    except commands.ExtensionError as e:
+        await ctx.send(f"Error: {e}")
 
 
 bot.run(config.get("discord", "token"))
