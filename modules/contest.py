@@ -68,9 +68,10 @@ async def contests(cls, interaction: discord.Interaction):
                 embed.add_field(name=f"{contest['event']}", value=f"Start Time: {contest['start']}\n[Contest Link]({contest['href']})", inline=False)
 
             return embed
-
-        message = await interaction.response.send_message(embed=generate_embed(current_page))
-
+        print("?1")
+        await interaction.response.send_message(embed=generate_embed(current_page))
+        print("?2")
+        message = interaction.original_response()
         for emoji in emoji_list:
             await message.add_reaction(emoji)
 
