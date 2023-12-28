@@ -10,7 +10,8 @@ class AppCmd(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def sync(self, ctx) -> None:
-        fmt = await ctx.bot.tree.sync(guild=ctx.guild)
+        print(self.bot.guilds)
+        fmt = await ctx.bot.tree.sync(guild=discord.Object(1153623382466768946))
         print(f"{fmt}")
         print(f"synced {len(fmt)} commands.")
         await ctx.send(f"Synced {len(fmt)} commands.")
@@ -35,4 +36,4 @@ class AppCmd(commands.Cog):
             await interaction.response.send_message("test.")
 
 async def setup(bot):
-    await bot.add_cog(AppCmd(bot), guilds=[discord.Object(id=guild.id) for guild in bot.guilds])
+    await bot.add_cog(AppCmd(bot), guild=discord.Object(1153623382466768946))

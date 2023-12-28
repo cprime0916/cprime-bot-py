@@ -81,6 +81,7 @@ Accepted.''')
             await ctx.send("Message not found.")
 
     @commands.command()
+    @commands.has_role(1153624712648347809)
     async def spam(self, ctx, text, num):
         await ctx.message.delete()
         if int(num) <= 10 and text[0] != '`':
