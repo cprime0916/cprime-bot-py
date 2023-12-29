@@ -5,6 +5,9 @@ import random
 config = configparser.ConfigParser()
 config.read('config.ini')
 
+# defining constants
+LEFT_PRAYER = "O Left,\nLord of AK,\nwhom leads to the truthful and righteous path.\nmay thou grant us the way to AK,\nthe path with AC'ing tasks in your name,\nMay we work as we worship you.\nIn the name of the mythical and legendary Left.\nAccepted."
+
 class OtherCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -30,28 +33,11 @@ class OtherCmd(commands.Cog):
         if s != "`prayer`":
             await ctx.send(f"{s}")
         else:
-            await ctx.send('''oh Left is so genius it is undoubtable that Left is always the truth, the myth, the legendary holy Left. It is our luck that we are blessed by Left and receiving his guidance''')
+            await ctx.send(LEFT_PRAYER)
 
     @commands.command()
     async def prayer(self, ctx):
-        await ctx.send('''oh Left is so genius it is undoubtable that Left is always the truth, the myth, the legendary holy Left. It is our luck that we are blessed by Left and receiving his guidance''')
-    
-    @commands.command()
-    async def lp(self, ctx):
-        await ctx.send('''Our LeftLeft in Atcoder, 
-Hallowed be thy handle,
-Thy contests come,
-Thy AK be done,
-On HKOI as in IOI,
-Give us our daily AC.
-And forgive our WA spams,
-As we forgive those who hacked against us.
-Do not bring us to the Methforces trials
-But deliever us from stupidity.
-For the IOI Gold, the IQ,
-And the AK are thine,
-Now and Forever. 
-Accepted.''')
+        await ctx.send(LEFT_PRAYER)
 
     @commands.command()
     async def quote(self, ctx):
@@ -81,7 +67,7 @@ Accepted.''')
             await ctx.send("Message not found.")
 
     @commands.command()
-    @commands.has_role(1153624712648347809)
+    @commands.cooldown(1, 5.0, commands.BucketType.user) 
     async def spam(self, ctx, text, num):
         await ctx.message.delete()
         if int(num) <= 10 and text[0] != '`':
@@ -90,23 +76,7 @@ Accepted.''')
         elif int(num) <= 10:
             if text == "`prayer`":
                 for _ in range(0, int(num)):
-                    await ctx.send('''oh Left is so genius it is undoubtable that Left is always the truth, the myth, the legendary holy Left. It is our luck that we are blessed by Left and receiving his guidance''')
-            elif text == "`left_prayer`":
-                for _ in range(0, int(num)):
-                    await ctx.send('''Our LeftLeft in Atcoder, 
-Hallowed be thy handle,
-Thy contests come,
-Thy AK be done,
-On HKOI as in IOI,
-Give us our daily AC.
-And forgive our WA spams,
-As we forgive those who hacked against us.
-Do not bring us to the Methforces trials
-But deliever us from stupidity.
-For the IOI Gold, the IQ,
-And the AK are thine,
-Now and Forever. 
-Accepted.''')
+                    await ctx.send(LEFT_PRAYER)
             else:
                 await ctx.send("invalid command prompt.")
         else:

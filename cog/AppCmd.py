@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import modules.contest
-
+import src.dse
 class AppCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -33,7 +33,7 @@ class AppCmd(commands.Cog):
             embed.add_field(name="Invalid DSE question", value=f"Discord ID: {interaction.user.id}")
             await interaction.response.send_message(embed=embed)
         else:
-            await interaction.response.send_message("test.")
+            await interaction.response.send_message(src.dse.DSE(question))
 
 async def setup(bot):
     await bot.add_cog(AppCmd(bot), guild=discord.Object(1153623382466768946))

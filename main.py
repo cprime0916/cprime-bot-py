@@ -16,7 +16,6 @@ activity = discord.Activity(type=discord.ActivityType.listening, name="String Qu
 bot = commands.Bot(command_prefix='.', activity=activity, intents=intents)
 totalPages = 0
 
-bot.remove_command("help")
 
 def load_config(file_path):
     with open(file_path) as file:
