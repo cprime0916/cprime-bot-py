@@ -41,7 +41,7 @@ class OtherCmd(commands.Cog):
 
     @commands.command()
     async def quote(self, ctx):
-        det = random.randint(1, 5)
+        det = random.randint(1, 6)
         if det == 1:
             await ctx.send(":nerd:")
         elif det == 2:
@@ -55,6 +55,9 @@ class OtherCmd(commands.Cog):
         elif det == 5:
             q = '"Less effort you made, more chance to <:ac:1171452943988428802>"'
             await ctx.send(f"Kiu said, {q}")
+        elif det == 6:
+            q = '"asfaf>>>>?????????ehzdvzdvzdv"'
+            await ctx.send(f"partialdiff said, {q}")
     
     @commands.command()
     async def reply(self, ctx, message_id, *, reply_content):
