@@ -1,7 +1,7 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-import modules.contest
+import src.contest
 import src.dse
 class AppCmd(commands.Cog):
     def __init__(self, bot):
@@ -18,7 +18,7 @@ class AppCmd(commands.Cog):
 
     @app_commands.command(name="contests", description="Sends the information of contests from multiple platforms. (ERROR)")
     async def contests(self, interaction: discord.Interaction):
-        await modules.contest.contests(self, interaction)
+        await src.contest.contests(self, interaction)
     
     @app_commands.command(name="ping", description="Pingpong!")
     async def ping(self, interaction: discord.Interaction):
