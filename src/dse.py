@@ -20,10 +20,28 @@ def DSE(s: str):
     elif s == "D109":
         return "Use the minimum amount of notes possible = use notes with values as large as possible."
     elif s == "D110":
-        return "Search up what is Chebyshev distance."
+        return "Find the relationship between the number of diagonal moves and horizontal/vertical moves"
     elif s == "D111":
         return "conditional statements + remember the type is `float`."
     elif s == "D112":
         return "search 'bitwise operators c++'"
+    elif s == "D201":
+        return "Can you find the pattern for recursion?"
+    elif s == "D202":
+        return "**DO NOT** directly iterate from 1 to n."
+    elif s == "D203":
+        return "Three cases for 'Clap' to occur, two cases are related to mod."
+    elif s == "D204":
+        return "consider two types of row, the centre row and all the others"
+    elif s == "D205":
+        return "The prime factorization works with while loop and a prime variable p\nHint: the first prime number is 2."
+    elif s == "D206":
+        return "Hint: all numbers end at 1."
+    elif s == "D207":
+        return "There are default gcd and lcm functions since C++20."
+    elif s == "D208":
+        return "Learn what is sorting and this task will be ez"
+    elif s == "D209":
+        return ""
     else:
         return "either the question is fake or it is just the prompt still work in progress."

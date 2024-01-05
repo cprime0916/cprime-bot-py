@@ -11,6 +11,9 @@ LEFT_PRAYER = "O Left,\nLord of AK,\nwhom leads to the truthful and righteous pa
 class OtherCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.started_assem = False
+        self.state = 1
+        self.host_id = 0
     
     @commands.command()
     async def agree(self, ctx):
@@ -84,6 +87,48 @@ class OtherCmd(commands.Cog):
                 await ctx.send("invalid command prompt.")
         else:
             await ctx.send("In `main.py` line 111, `MAX_LIMIT = 10`")
+
+    @commands.group()
+    async def assem(self, ctx):
+        if ctx.invoked_subcommand is None:
+            embed = discord.Embed(title="ERROR", color=discord.Color.red())
+            embed.add_field(name="Invalid command of `.assem` <:wa:1172511313168175235>", value="Use `.help assem` for commands")
+            await ctx.send(embed=embed)
+    
+    @assem.command()
+    async def start(self, ctx):
+        if self.started_assem is False:
+            self.started_assem = True
+            self.host_id = ctx.author.id
+            await ctx.send(f"assem hosted by {ctx.author.mention} officially starts!")
+        else:
+            await ctx.send("assem already started!")
+
+    @assem.command()
+    async def end(self, ctx):
+        if self.started_assem is False and ctx.author.id == self.host_id:
+            await ctx.send("assem isn't started, you can host one by `.assem start`.")
+        elif self.started_assem is False:
+            await ctx.send(f"assem's host is {ctx.author.mention}. Only the host is eligible to end ")
+        else:
+            self.started_assem = False
+            await ctx.send("Successfully ended assem.")
+
+    @assem.command()
+    async def guide(self, ctx):
+        embed = discord.Embed(color=discord.Color.blue(), title="Guide to Assembly")
+        embed.add_field(name="Prayer", value="We start the assem with prayers to praise Left, the AK Lord.\n")
+        embed.add_field(name="OI Discussion", value="And then we discuss about OI in Left's name.\n")
+        embed.add_field(name="Bot speech", value="Then the bot will speak out the speech made by the assem host. Usually content to praise Left.\n")
+        embed.add_field(name="End", value="We end the assem with a last prayer, begging for AC blessings, in the name of Left.\n")
+        await ctx.send(embed=embed)
+
+    @assem.command()
+    async def start_prayer(self, ctx, s: str):
+        if self.started_assem is True and self.host_id == ctx.author.id:
+            await ctx.send("Prayer starts now!")
+        else:
+            await ctx.send("assem isn't started, you can host one by `.assem start`.")
 
 async def setup(bot):
     await bot.add_cog(OtherCmd(bot))
