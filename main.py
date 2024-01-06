@@ -25,6 +25,7 @@ def load_config(file_path):
 # bot events
 @bot.event
 async def on_ready():
+    await bot.tree.sync()
     print('Logged in as', bot.user.name)
 
 @bot.event

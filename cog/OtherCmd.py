@@ -31,6 +31,23 @@ class OtherCmd(commands.Cog):
             await ctx.send("Real")
 
     @commands.command()
+    async def disagree(self, ctx):
+        await ctx.message.delete()
+        det = random.randint(1, 6)
+        if det == 1:
+            await ctx.send("nuh uh")
+        elif det == 2:
+            await ctx.send("naw")
+        elif det == 3:
+            await ctx.send("not real bruv")
+        elif det == 4:
+            await ctx.send("hell nah bruv this ain't it")
+        elif det == 5:
+            await ctx.send("you nigger")
+        elif det == 6:
+            await ctx.send("no u")
+            
+    @commands.command()
     async def say(self, ctx, *, s):
         await ctx.message.delete()
         if s != "`prayer`":

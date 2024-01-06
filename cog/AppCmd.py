@@ -1,7 +1,6 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-import src.contest
 import src.dse
 FOO = '''```py
 @app_commands.command(name="foo", description="foobar")
@@ -23,10 +22,6 @@ class AppCmd(commands.Cog):
         print(f"synced {len(fmt)} commands.")
         await ctx.send(f"Synced {len(fmt)} commands.")
 
-    @app_commands.command(name="contests", description="Sends the information of contests from multiple platforms. (ERROR)")
-    async def contests(self, interaction: discord.Interaction):
-        await src.contest.contests(self, interaction)
-    
     @app_commands.command(name="ping", description="Pingpong!")
     async def ping(self, interaction: discord.Interaction):
         latency = self.bot.latency
@@ -36,11 +31,8 @@ class AppCmd(commands.Cog):
     @app_commands.command(name="foo", description="foobar")
     async def foo(self, interaction: discord.Interaction):
         embed = discord.Embed(color=discord.Color.blue(), title="Sample discord slash command", description=FOO)
-        await interaction.response.send_message(embed=embed)
+        await interaction.response.send_message(embed=embed, ephemeral=True)
 
-    @app_commands.command(name="eph", description="foobar")
-    async def eph(self, interaction: discord.Interaction, text: str="gulu!"):
-        await interaction.response.send_message(text, ephemeral=True)
 
     @app_commands.command(name="dse", description="provides hints for HKOI DSE question")
     async def dse(self, interaction: discord.Interaction, question: str):

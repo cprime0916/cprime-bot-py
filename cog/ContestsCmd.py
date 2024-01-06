@@ -48,8 +48,8 @@ class ContestCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command()
-    async def contests(self, ctx):
+    @commands.hybrid_command(name='contests', with_app_command=True)
+    async def contests(self, ctx: commands.Context):
         print("run func")
         hosts = ["codeforces.com", "atcoder.jp", "codechef.com", "leetcode.com"]
         upcoming_contests = getcn(hosts)
