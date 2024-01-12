@@ -6,13 +6,14 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 # defining constants
-LEFT_PRAYER = "O Left,\nLord of AK,\nwhom leads to the truthful and righteous path.\nmay thou grant us the way to AK,\nthe path with AC'ing tasks in your name,\nMay we work as we worship you.\nIn the name of the mythical and legendary Left.\nAccepted."
+LEFT_PRAYER = "O Left,\nLord of AK,\nwhom leads to the truthful and righteous path.\nmay thou grant us the way to AK,\nthe path with AC'ing tasks in thy name,\nMay we work as we worship you.\nIn the name of the mythical and legendary Left.\nAccepted."
+CODE_PRAYER = "O Left,\nLord of AK,\nmay thou grant us the intelligence, the wisdom,\nto write elegant code & programs in thy name.\nMay thou guide us to elegant approaches,\nto increase ranking in thy name,\n& under thy glory.\nAccepted."
 
 class OtherCmd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.started_assem = False
-        self.state = 1
+        self.state = 0
         self.host_id = 0
     
     @commands.command()
@@ -50,10 +51,12 @@ class OtherCmd(commands.Cog):
     @commands.command()
     async def say(self, ctx, *, s):
         await ctx.message.delete()
-        if s != "`prayer`":
+        if s != "`prayer`" and s != "`code_prayer`":
             await ctx.send(f"{s}")
-        else:
+        elif s == "`prayer`":
             await ctx.send(LEFT_PRAYER)
+        elif s == "`code_prayer`":
+            await ctx.send(CODE_PRAYER)
 
     @commands.command()
     async def prayer(self, ctx):
@@ -113,10 +116,11 @@ class OtherCmd(commands.Cog):
             await ctx.send(embed=embed)
     
     @assem.command()
-    async def start(self, ctx):
+    async def init(self, ctx):
         if self.started_assem is False:
             self.started_assem = True
             self.host_id = ctx.author.id
+            self.state = 1
             await ctx.send(f"assem hosted by {ctx.author.mention} officially starts!")
         else:
             await ctx.send("assem already started!")
@@ -124,11 +128,12 @@ class OtherCmd(commands.Cog):
     @assem.command()
     async def end(self, ctx):
         if self.started_assem is False and ctx.author.id == self.host_id:
-            await ctx.send("assem isn't started, you can host one by `.assem start`.")
+            await ctx.send("assem isn't initialized, you can host one by `.assem init`.")
         elif self.started_assem is False:
             await ctx.send(f"assem's host is {ctx.author.mention}. Only the host is eligible to end ")
         else:
             self.started_assem = False
+            self.state = 0
             await ctx.send("Successfully ended assem.")
 
     @assem.command()
@@ -141,11 +146,24 @@ class OtherCmd(commands.Cog):
         await ctx.send(embed=embed)
 
     @assem.command()
-    async def start_prayer(self, ctx, s: str):
+    async def init_prayer(self, ctx):
         if self.started_assem is True and self.host_id == ctx.author.id:
             await ctx.send("Prayer starts now!")
+            self.state = 2
         else:
             await ctx.send("assem isn't started, you can host one by `.assem start`.")
+    
+    @assem.command()
+    async def prayer(self, ctx, assemPrayer: str):
+        if self.state == 2:
+            await ctx.send(f"O Left, under thy grace and blessings, {ctx.author.mention} wrote this prayer to praise you,\nNow let us praise you, with our hearts and soul.\n{assemPrayer}")
+            # TODO: Make C'Bot declare and lead the prayer
+        elif self.state < 2 and self.state > 0:
+            await ctx.send("prayer session has not been initialized yet.")
+        elif self.state == 0:
+            await ctx.send("Assembly isn't initialized yet.")
+        else:
+            await ctx.send("Prayer session is already over.")
 
 async def setup(bot):
     await bot.add_cog(OtherCmd(bot))

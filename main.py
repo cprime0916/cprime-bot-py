@@ -6,6 +6,7 @@ import discord
 from discord.ext import commands
 import configparser
 import random
+from lifetime import lifetime
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -111,5 +112,5 @@ async def reload_cog(ctx, cog):
     except commands.ExtensionError as e:
         await ctx.send(f"Error: {e}")
 
-
+lifetime()
 bot.run(config.get("discord", "token"))
